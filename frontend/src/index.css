@@ -8,8 +8,159 @@ body,
   height: 100%;
 }
 
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
 @layer components {
   .input {
-    @apply w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-200 focus:outline-none;
+    @apply w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:outline-none transition-all duration-200 hover:border-slate-400;
   }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-md active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg bg-white border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 hover:shadow-md active:scale-95;
+  }
+
+  .card {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300;
+  }
+
+  .card-elevated {
+    @apply bg-white/80 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+
+  .glassmorphism {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-scale {
+    animation: scale 0.2s ease-out;
+  }
+
+  .animate-bounce-subtle {
+    animation: bounceSubtle 0.6s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounceSubtle {
+  0% {
+    transform: translateY(-3px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(1px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors;
+}
+
+/* Form focus animations */
+.form-group {
+  @apply relative;
+}
+
+.form-group input:focus + label,
+.form-group textarea:focus + label,
+.form-group select:focus + label {
+  @apply text-blue-600 transform scale-90 -translate-y-1;
+}
+
+/* Radio button animations */
+.radio-modern {
+  @apply relative inline-flex items-center;
+}
+
+.radio-modern input[type="radio"] {
+  @apply sr-only;
+}
+
+.radio-modern .radio-circle {
+  @apply w-4 h-4 border-2 border-gray-300 rounded-full mr-3 transition-all duration-200 cursor-pointer;
+}
+
+.radio-modern input[type="radio"]:checked + .radio-circle {
+  @apply border-blue-600 bg-blue-600;
+}
+
+.radio-modern input[type="radio"]:checked + .radio-circle::after {
+  content: '';
+  @apply w-2 h-2 bg-white rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+}
+
+/* Modern card hover effects */
+.card-interactive {
+  @apply cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl;
+}
+
+/* Loading spinner */
+.spinner {
+  @apply animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-blue-600;
 }
