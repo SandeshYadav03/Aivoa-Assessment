@@ -87,7 +87,16 @@ async def log_interaction(
     Returns:
         The created interaction as a dict.
     """
-    hcp_id = as_int(hcp_id, field="hcp_id")
+    # Validate hcp_id is a real integer, not a placeholder
+    try:
+        hcp_id = as_int(hcp_id, field="hcp_id")
+    except ValueError as e:
+        return {"error": "Cannot log interaction without selecting an HCP first. Please select an HCP from the list."}
+
+    # Additional check for obviously invalid IDs
+    if hcp_id <= 0:
+        return {"error": "Cannot log interaction without selecting an HCP first. Please select an HCP from the list."}
+
     extracted = await _extract_structured(raw_notes)
 
     when: datetime | None = None
@@ -98,18 +107,23 @@ async def log_interaction(
             when = None
 
     async with session_factory()() as session:
-        row = await interaction_repo.create_interaction(
-            session,
-            hcp_id=hcp_id,
-            channel=channel,
-            outcome=extracted["outcome"],
-            sentiment=extracted["sentiment"],
-            summary=extracted["summary"],
-            raw_notes=raw_notes,
-            products_discussed=extracted["products_discussed"],
-            next_step=extracted["next_step"],
-            occurred_at=when,
-        )
+        try:
+            row = await interaction_repo.create_interaction(
+                session,
+                hcp_id=hcp_id,
+                channel=channel,
+                outcome=extracted["outcome"],
+                sentiment=extracted["sentiment"],
+                summary=extracted["summary"],
+                raw_notes=raw_notes,
+                products_discussed=extracted["products_discussed"],
+                next_step=extracted["next_step"],
+                occurred_at=when,
+            )
+        except Exception as e:
+            if "foreign key constraint" in str(e).lower():
+                return {"error": f"HCP with ID {hcp_id} not found. Please select a valid HCP from the list."}
+            raise
 
     return {
         "id": row.id,

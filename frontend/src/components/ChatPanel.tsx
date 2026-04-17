@@ -89,13 +89,13 @@ export default function ChatPanel({ hcpId }: Props) {
                 }`}
               >
                 <div className="whitespace-pre-wrap leading-relaxed">{t.content}</div>
-                {t.toolEvents && t.toolEvents.length > 0 && (
+                {/* {t.toolEvents && t.toolEvents.length > 0 && (
                   <div className="mt-3 space-y-2">
                     {t.toolEvents.map((ev, i) => (
                       <ToolEventChip key={i} ev={ev} />
                     ))}
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>
