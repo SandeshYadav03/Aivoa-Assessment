@@ -31,8 +31,11 @@ export default function ChatPanel({ hcpId }: Props) {
       const res = await chat({ hcp_id: hcpId, message, history }).unwrap();
       dispatch(assistantReplied({ reply: res.reply, toolEvents: res.tool_events }));
     } catch (err) {
+      const detail =
+        (err as { data?: { detail?: string } })?.data?.detail ??
+        "Sorry — the agent errored. Check the backend logs.";
       dispatch(assistantReplied({
-        reply: "Sorry — the agent errored. Check the backend logs.",
+        reply: detail,
         toolEvents: [],
       }));
       dispatch(requestFailed());

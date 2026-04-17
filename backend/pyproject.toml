@@ -17,7 +17,7 @@ dependencies = [
     "python-dateutil>=2.9.0",
     "langgraph>=0.2.50",
     "langchain-core>=0.3.25",
-    "langchain-groq>=0.2.1",
+    "langchain-openai>=0.2.14",
 ]
 
 [project.optional-dependencies]

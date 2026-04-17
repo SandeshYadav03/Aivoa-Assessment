@@ -20,12 +20,11 @@ class Settings(BaseSettings):
     database_url: str = Field(..., description="Async SQLAlchemy URL, e.g. postgresql+asyncpg://...")
     database_echo: bool = False
 
-    groq_api_key: str = Field("", description="Groq API key (required for chat endpoint)")
-    # Brief specified `gemma2-9b-it`, but Groq decommissioned it post-brief.
-    # Falling back to the brief's alternative: `llama-3.3-70b-versatile`.
-    groq_model: str = "llama-3.3-70b-versatile"
-    groq_temperature: float = 0.2
-    groq_max_tokens: int = 1024
+    openrouter_api_key: str = Field("", description="OpenRouter API key (required for chat endpoint)")
+    openrouter_model: str = "openai/gpt-4o-mini"
+    openrouter_base_url: str = "https://openrouter.ai/api/v1"
+    openrouter_temperature: float = 0.2
+    openrouter_max_tokens: int = 1024
 
     cors_origins: str = "http://localhost:5173"
 
